@@ -63,6 +63,11 @@ public class LoopJuego extends AnimationTimer {
     private int ghostX = 0;
     private int secuenciaGhost = 0;
     private int secuenciaGhost2 = 0;
+    private Enemigosimple cepam;
+    private Image cepamala;
+    private int secuenciacepa=0;
+    private Enemigosimple calavera;
+    private Image calaverai; 
     private boolean ghostP = false;
     private int puntaje = 0;
 
@@ -70,10 +75,19 @@ public class LoopJuego extends AnimationTimer {
 
         this.lapiz = lapiz;
         this.escena = escena;
+
         this.ninja = new Personaje(0.0, 420.0, 40, 52, 0);//ubicación del ninjaImI
         this.esqueleto = new Enemigosimple(720, 478, 45, 57);//ubicacion del esqueleto
         this.minotauro = new Enemigosimple(720, 450, 97, 46);//ubicacion del minotauro
         this.hongo = new Enemigosimple(720, 478, 16, 16);//ubicacion del hongo
+
+        this.ninja = new Personaje(0.0, 420.0, 40, 52, 0);//ubicación del ninjaImI v;
+        this.esqueleto = new Enemigosimple(720, 478, 45, 57);
+        this.cepam = new Enemigosimple(20,20, (int) (40.0*1.07),40 );
+        this.calavera = new Enemigosimple(20,20, (int) (40*1.8), 40);
+        this.cepamala = new Image("Images/rpgcritter update formatted transparent.png");
+        this.calaverai = new Image("Images/rpgcritter update formatted transparent.png");
+
         this.heart = new Image("Images/heart.png");
         this.fondo = new Image("Images/CITY_MEGA sin fondo.png");
         this.fondo2 = new Image("Images/Nivel2.png");
@@ -137,7 +151,7 @@ public class LoopJuego extends AnimationTimer {
                     this.secuencia2++;
                 }
             }
-
+            
             if (this.numero % 10 == 0) {
                 if (this.secuencia3 == 3) {
                     this.secuencia3 = 0;
@@ -145,12 +159,13 @@ public class LoopJuego extends AnimationTimer {
                     this.secuencia3++;
                 }
             }
-
+            
             //shape del personaje
             Shape sNinja = new Rectangle(ninja.getXref() + 5, ninja.getYref(), ninja.getAncho() - 5, ninja.getAlto());
             Shape sEsqueleto = new Rectangle(esqueleto.getXref(), esqueleto.getYref(), 23, 38);
-            Shape sMinotauro = new Rectangle(minotauro.getXref() + 30, minotauro.getYref() + 7, 25, 35);
+            Shape sMinotauro = new Rectangle(minotauro.getXref()+30,minotauro.getYref()+7, 25, 35);
             Shape sHongo = new Rectangle(hongo.getXref(), hongo.getYref(), 25, 25);
+
             //Permite dibujar una imagen de fondo
             //permite hacer que el escenario vaya moviendose en la ubicación 
             //*********************************ESCENA 1************************
@@ -166,10 +181,13 @@ public class LoopJuego extends AnimationTimer {
                 lapiz.drawImage(fondo, 43, 2400, 696, 320, 0, 0, 796, 520);
                 lapiz.drawImage(fondo, 43, 2068, 696, 268, 0, 89, 796, 438);
                 lapiz.drawImage(fondo, 43, 1621, 696, 235, 0, 204, 796, 330);
-
+                
+                
                 Shape interseccion = SVGPath.intersect(sNinja, pared);
                 Shape interseccion2 = SVGPath.intersect(sNinja, pared2);
                 if (interseccion.getBoundsInLocal().getWidth() != -1) {
+                    System.out.println("esta en colicion");
+                    System.out.println(interseccion.getBoundsInLocal().getWidth());
                     ninja.setrefX(-22);
                     ninja.setxAbs(-20);
                 }
@@ -185,21 +203,13 @@ public class LoopJuego extends AnimationTimer {
                     lapiz.drawImage(hongoim, 16 * this.secuencia2, 48, 16, 16, hongo.getXref(), hongo.getYref(), 25, 25);
                     if (intert2.getBoundsInLocal().getWidth() != -1) {
                         comprobacion3 = false;
-                    }
-                }
-
-                 if (inter.getBoundsInLocal().getWidth() != -1 && tiempovida == 0) {
-                    System.out.println("Se ha chocado con el hongofantasma");
-                    vidas--;
-                    tiempovida = 50;
-                }
-                //Activar pared2 escenario 
-                /*if (puntaje < 1000) {
+                    }}
+                if (puntaje < 1000) {
                     if (interseccion2.getBoundsInLocal().getWidth() != -1) {
                         ninja.setrefX(764);
                         ninja.setxAbs(762);
                     }
-                }*/
+                }
                 //*******************Escena 2**************************
             } else if (ninja.getxAbs() >= 796 && ninja.getxAbs() < 1592) {
                 if (ninja.getxAbs() == 796) {//796
@@ -220,14 +230,16 @@ public class LoopJuego extends AnimationTimer {
                 if (interseccion.getBoundsInLocal().getWidth() != -1) {
                     ninja.setrefX(2);
                     ninja.setxAbs(798);
-                }
+                } 
                 if (puntaje >= 1000 && puntaje < 2000) {
+
                     if (interseccion2.getBoundsInLocal().getWidth() != -1) {
                         ninja.setrefX(764);
                         ninja.setxAbs(1562);
-                        System.out.println(interseccion2.getBoundsInLocal().getWidth());
-
+                     System.out.println(interseccion2.getBoundsInLocal().getWidth());
+                    
                     }
+
                 }
 
                 if (!comprobacion) {
@@ -243,6 +255,9 @@ public class LoopJuego extends AnimationTimer {
                         comprobacion = false;
                     }
                 }
+                /*if (interseccion.getBoundsInLocal().getWidth() != -1) {
+                    ninja.setrefX(2);
+                }*/
                 if (inter.getBoundsInLocal().getWidth() != -1 && tiempovida == 0) {
                     System.out.println("Se ha chocado con el esqueleto");
                     vidas--;
@@ -264,7 +279,7 @@ public class LoopJuego extends AnimationTimer {
                 Shape intersecmin = SVGPath.intersect(sNinja, sMinotauro);
 
                 lapiz.drawImage(fondo3, 0, 0, 492, 233, 0, 0, 796, 520);
-
+                
                 if (!comprobacion2) {
                     minotauro.moverizquierda();
                     lapiz.drawImage(minota2, 92 + 97 * this.secuencia3, 124, 97, 46, minotauro.getXref(), minotauro.getYref(), 107, 52);//animacion esqueleto
@@ -278,7 +293,7 @@ public class LoopJuego extends AnimationTimer {
                         comprobacion2 = false;
                     }
                 }
-
+                
                 if (intersecmin.getBoundsInLocal().getWidth() != -1 && tiempovida == 0) {
                     System.out.println("Se ha chocado con el minotauro");
                     vidas--;
@@ -289,12 +304,23 @@ public class LoopJuego extends AnimationTimer {
                     ninja.setrefX(2);
                     ninja.setxAbs(1598);
                 }
-                
+                if (puntaje >= 2000 && puntaje < 3000) {
+
+                if (interseccion2.getBoundsInLocal().getWidth() != -1) {
+                        ninja.setrefX(764);
+                        ninja.setxAbs(2360);
             }
-            
+                }
+            }
+
+            //lapiz.strokeRect(ninja.getXref() + 5, ninja.getYref(), ninja.getAncho(), ninja.getAlto());
+            //Obstaculos (imagen)
+            //lapiz.fillRect(100, 100, 20, 20);
+            //lapiz.strokeRect(0, 507, 1800, 20);
             //movimiento de "gravedad"
             ninja.moverAbajo();
-            
+
+            //Validando colision
             //Obstaculos(programados)
             Shape sObstaculo = new Rectangle(100, 100, 20, 20);
             Shape bObstaculo = new Rectangle(0, 503, 1800, 20);
@@ -319,8 +345,16 @@ public class LoopJuego extends AnimationTimer {
                 } else {
                     this.secuenciaGhost2++;
                 }
-
+                
+                if (this.secuenciacepa == 2) {
+                    this.secuenciacepa = 0;
+                } else {
+                    this.secuenciacepa++;
+                }
             }
+            //cepamala
+
+
             if (ghostX < ninja.getXref()) {
                 lapiz.drawImage(ghost1, 32 * this.secuenciaGhost, 64, 32, 32, ghostX, 20, 52, 52);
                 ghostX++;
@@ -332,11 +366,12 @@ public class LoopJuego extends AnimationTimer {
                 ghostP = true;
             }
             if (ghostX == ninja.getXref()) {
-                if (ghostP) {
+                if (ghostP) {     
                     lapiz.drawImage(ghost2, 32 * (this.secuenciaGhost2 + 3), 32, 32, 32, ghostX, 20, 52, 52);
                 } else {
                     lapiz.drawImage(ghost1, 32 * this.secuenciaGhost2, 32, 32, 32, ghostX, 20, 52, 52);
                 }
+                
             }
             //******************************Acciones de teclado***********************************
             if (marca == "RIGHT") {
@@ -346,7 +381,6 @@ public class LoopJuego extends AnimationTimer {
             }
 
             if (pulsacionTeclado.contains("LEFT")) {
-                //
                 marca = "LEFT";
                 ninja.setxAbs(ninja.getxAbs() - 2);
                 ninja.moverIzquierda();
@@ -395,10 +429,15 @@ public class LoopJuego extends AnimationTimer {
                 }
             }
 
+            
             //imagen de la salud actual
+            //imagen de la puntuacion
+
             lapiz.drawImage(heart, 0, 0, 64, 64, 50, 5, 20, 20);
             lapiz.strokeText("= " + vidas, 72, 17);
-            
+            lapiz.drawImage(cepamala, 129 + 16*secuenciacepa ,130, 15, 17, 50, 20, cepam.getAncho() ,cepam.getAlto());
+            lapiz.drawImage(calaverai, 192+ 16*secuenciacepa ,4, 15, 25, 50, 70, calavera.getAncho() ,calavera.getAlto());
+
             lapiz.strokeText("Puntaje actual : " + puntaje, 600, 17);
 
             this.numero++;
