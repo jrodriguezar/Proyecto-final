@@ -7,16 +7,27 @@ package Objetos;
 public class Enemigosimple extends Thread{
     private double xref;
     private double yref;
-    private int alto;
-    private int ancho;
+    private double alto;
+    private double ancho;
 
-    public Enemigosimple(double xref, double yref, int alto, int ancho) {
+    public Enemigosimple(double xref, double yref, double alto, double ancho) {
         this.xref = xref;
         this.yref = yref;
         this.alto = alto;
         this.ancho = ancho;
     }
 
+
+
+    public void setAlto(double alto) {
+        this.alto = alto;
+    }
+
+
+    public void setAncho(double ancho) {
+        this.ancho = ancho;
+    }
+    
     public void setXref(double xref) {
         this.xref = xref;
     }
@@ -31,6 +42,14 @@ public class Enemigosimple extends Thread{
 
     public double getYref() {
         return yref;
+    }
+
+    public double getAlto() {
+        return alto;
+    }
+
+    public double getAncho() {
+        return ancho;
     }
     
     public void moverderecha(){
