@@ -448,6 +448,6 @@ public class LoopJuego extends AnimationTimer {
             debounceP--;
 
         }
-
+//
     }
 }
